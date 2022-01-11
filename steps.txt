@@ -1,0 +1,689 @@
+######################################################################
+#################### Construct a Python Unit Test #################### 
+######################################################################
+
+********************************************
+****************** Task 1 ****************** 
+********************************************
+** Step 1 **
+cd working_directory
+
+** Step 2 **
+pipenv install pytest 
+
+** Step 3 **
+pipenv install coverage
+
+** Step 4 **
+pipenv shell
+
+** Step 9 **
+import pytest
+
+@pytest.fixture
+def student():
+    from student import Student
+    stud = Student('Luka Zauber')
+    yield stud
+    del stud
+
+@pytest.fixture
+def subject():
+    from subject import Subject
+    s = Subject('Unit Testing 101')
+    yield s
+    del s
+
+@pytest.mark.usefixtures('student', 'subject')
+class TestHappyPath:
+    def test_add_subject_to_student(self, student, subject):
+        assert student.add_subject(subject) is True
+
+** Step 10 **
+pytest test_grades_happypath.py 
+
+** Step 11 **
+import pytest
+
+@pytest.fixture
+def student():
+    from student import Student
+    stud = Student('Luka Zauber')
+    yield stud
+    del stud
+
+@pytest.fixture
+def subject():
+    from subject import Subject
+    s = Subject('Unit Testing 101')
+    yield s
+    del s
+
+@pytest.mark.usefixtures('student', 'subject')
+class TestHappyPath:
+    def test_add_subject_to_student(self, student, subject):
+        assert student.add_subject(subject) is True
+
+    def test_add_grade_to_subject(self, student, subject):
+         student.add_subject(subject)
+        assert student.set_grade(subject, 8) is True
+
+** Step 12 **
+import pytest
+
+@pytest.fixture
+def student():
+    from student import Student
+    stud = Student('Luka Zauber')
+    yield stud
+    del stud
+
+@pytest.fixture
+def subject():
+    from subject import Subject
+    s = Subject('Unit Testing 101')
+    yield s
+    del s
+
+@pytest.mark.usefixtures('student', 'subject')
+class TestHappyPath:
+    def test_add_subject_to_student(self, student, subject):
+        assert student.add_subject(subject) is True
+
+    def test_add_grade_to_subject(self, student, subject):
+         student.add_subject(subject)
+        assert student.set_grade(subject, 8) is True
+
+def test_get_subject_grade(self, student, subject):
+        student.add_subject(subject)
+        student.set_grade(subject, 8)
+        student.set_grade(subject, 9)
+        assert student.get_grades_for_subject(subject) == [8, 9]
+
+** Step 13 **
+pytest test_grades_happypath.py
+
+********************************************
+****************** Task 2 ****************** 
+********************************************
+** Step 1 **
+import subject
+
+class Student:
+    def __init__(self, name):
+        self.name = name
+        self.email = None
+        self.subjects = []
+        self.grades = []
+
+    def add_subject(self, subject):
+        self.subjects.append(subject)
+        return True
+
+    def set_grade(self, subject, grade):
+        pass
+
+    def get_grades_for_subject(self, subject):
+        pass
+
+** Step 2 **
+import subject
+
+class Student:
+    def __init__(self, name):
+        self.name = name
+        self.email = None
+        self.subjects = []
+        self.grades = []
+
+    def add_subject(self, subject):
+        self.subjects.append(subject)
+        return True
+
+    def set_grade(self, subject, grade):
+        self.grades.append((subject, grade))
+        return True
+
+    def get_grades_for_subject(self, subject):
+        pass
+
+** Step 3 **
+import subject
+
+class Student:
+    def __init__(self, name):
+        self.name = name
+        self.email = None
+        self.subjects = []
+        self.grades = []
+
+    def add_subject(self, subject):
+        self.subjects.append(subject)
+        return True
+
+    def set_grade(self, subject, grade):
+        self.grades.append((subject, grade))
+        return True
+
+    def get_grades_for_subject(self, subject):
+        grades = []
+        for grade in self.grades:
+            grades.append(grade[1])
+
+            return grades
+
+** Step 4 **
+pytest test_grades_happypath.py
+
+********************************************
+****************** Task 3 ****************** 
+********************************************
+** Step 1 **
+import pytest
+
+@pytest.fixture
+def student():
+    from student import Student
+    stud = Student('Luka Zauber')
+    yield stud
+    del stud
+
+@pytest.fixture
+def subject():
+    from subject import Subject
+    s = Subject('Unit Testing 101')
+    yield s
+    del s
+
+@pytest.fixture
+def subjects():
+    from subject import Subject
+    s = [Subject('Unit Testing 101'), Subject('CS500')]
+    yield s
+    del s
+
+@pytest.mark.usefixtures('student', 'subject')
+class TestErrorPathSubject:
+    pass
+
+
+@pytest.mark.usefixtures('student', 'subject')
+class TestErrorPathAddGrade:
+    pass
+@pytest.mark.usefixtures('student', 'subject', 'subjects')
+class TestErrorPathGetGrade:
+    pass
+
+** Step 2 **
+import pytest
+
+@pytest.fixture
+def student():
+    from student import Student
+    stud = Student('Luka Zauber')
+    yield stud
+    del stud
+
+@pytest.fixture
+def subject():
+    from subject import Subject
+    s = Subject('Unit Testing 101')
+    yield s
+    del s
+
+@pytest.fixture
+def subjects():
+    from subject import Subject
+    s = [Subject('Unit Testing 101'), Subject('CS500')]
+    yield s
+    del s
+
+@pytest.mark.usefixtures('student', 'subject')
+class TestErrorPathSubject:
+    def test_add_empty_subject_to_student(self, student, subject):
+        assert student.add_subject(None) is False
+
+@pytest.mark.usefixtures('student', 'subject')
+class TestErrorPathAddGrade:
+    pass
+
+@pytest.mark.usefixtures('student', 'subject', 'subjects')
+class TestErrorPathGetGrade:
+    pass
+
+** Step 3 **
+import pytest
+
+@pytest.fixture
+def student():
+    from student import Student
+    stud = Student('Luka Zauber')
+    yield stud
+    del stud
+
+@pytest.fixture
+def subject():
+    from subject import Subject
+    s = Subject('Unit Testing 101')
+    yield s
+    del s
+
+@pytest.fixture
+def subjects():
+    from subject import Subject
+    s = [Subject('Unit Testing 101'), Subject('CS500')]
+    yield s
+    del s
+
+@pytest.mark.usefixtures('student', 'subject')
+class TestErrorPathSubject:
+    def test_add_empty_subject_to_student(self, student, subject):
+        assert student.add_subject(None) is False
+
+    def test_add_existing_subject_to_student(self, student, subject):
+        student.add_subject(subject)
+        assert student.add_subject(subject) is False
+
+@pytest.mark.usefixtures('student', 'subject')
+class TestErrorPathAddGrade:
+    pass
+
+@pytest.mark.usefixtures('student', 'subject', 'subjects')
+class TestErrorPathGetGrade:
+    pass
+
+** Step 4 **
+import pytest
+
+@pytest.fixture
+def student():
+    from student import Student
+    stud = Student('Luka Zauber')
+    yield stud
+    del stud
+
+@pytest.fixture
+def subject():
+    from subject import Subject
+    s = Subject('Unit Testing 101')
+    yield s
+    del s
+
+@pytest.fixture
+def subjects():
+    from subject import Subject
+    s = [Subject('Unit Testing 101'), Subject('CS500')]
+    yield s
+    del s
+
+@pytest.mark.usefixtures('student', 'subject')
+class TestErrorPathSubject:
+    def test_add_empty_subject_to_student(self, student, subject):
+        assert student.add_subject(None) is False
+
+    def test_add_existing_subject_to_student(self, student, subject):
+        student.add_subject(subject)
+        assert student.add_subject(subject) is False
+
+@pytest.mark.usefixtures('student', 'subject')
+class TestErrorPathAddGrade:
+    def test_add_higher_grade_to_subject(self, student, subject):
+        student.add_subject(subject)
+        with pytest.raises(ValueError):
+            student.set_grade(subject, 11)
+
+@pytest.mark.usefixtures('student', 'subject', 'subjects')
+class TestErrorPathGetGrade:
+    pass
+
+** Step 5 **
+import pytest
+
+@pytest.fixture
+def student():
+    from student import Student
+    stud = Student('Luka Zauber')
+    yield stud
+    del stud
+
+@pytest.fixture
+def subject():
+    from subject import Subject
+    s = Subject('Unit Testing 101')
+    yield s
+    del s
+
+@pytest.fixture
+def subjects():
+    from subject import Subject
+    s = [Subject('Unit Testing 101'), Subject('CS500')]
+    yield s
+    del s
+
+@pytest.mark.usefixtures('student', 'subject')
+class TestErrorPathSubject:
+    def test_add_empty_subject_to_student(self, student, subject):
+        assert student.add_subject(None) is False
+
+    def test_add_existing_subject_to_student(self, student, subject):
+        student.add_subject(subject)
+        assert student.add_subject(subject) is False
+
+@pytest.mark.usefixtures('student', 'subject')
+class TestErrorPathAddGrade:
+    def test_add_higher_grade_to_subject(self, student, subject):
+        student.add_subject(subject)
+        with pytest.raises(ValueError):
+            student.set_grade(subject, 11)
+
+     def test_add_lower_grade_to_subject(self, student, subject):
+        student.add_subject(subject)
+        with pytest.raises(ValueError):
+            student.set_grade(subject, -1)
+
+@pytest.mark.usefixtures('student', 'subject', 'subjects')
+class TestErrorPathGetGrade:
+    pass
+
+** Step 6 **
+import pytest
+
+@pytest.fixture
+def student():
+    from student import Student
+    stud = Student('Luka Zauber')
+    yield stud
+    del stud
+
+@pytest.fixture
+def subject():
+    from subject import Subject
+    s = Subject('Unit Testing 101')
+    yield s
+    del s
+
+@pytest.fixture
+def subjects():
+    from subject import Subject
+    s = [Subject('Unit Testing 101'), Subject('CS500')]
+    yield s
+    del s
+
+@pytest.mark.usefixtures('student', 'subject')
+class TestErrorPathSubject:
+    def test_add_empty_subject_to_student(self, student, subject):
+        assert student.add_subject(None) is False
+
+    def test_add_existing_subject_to_student(self, student, subject):
+        student.add_subject(subject)
+        assert student.add_subject(subject) is False
+
+@pytest.mark.usefixtures('student', 'subject')
+class TestErrorPathAddGrade:
+    def test_add_higher_grade_to_subject(self, student, subject):
+        student.add_subject(subject)
+        with pytest.raises(ValueError):
+            student.set_grade(subject, 11)
+
+     def test_add_lower_grade_to_subject(self, student, subject):
+        student.add_subject(subject)
+        with pytest.raises(ValueError):
+            student.set_grade(subject, -1)
+
+    def test_add_zero_grade_to_subject(self, student, subject):
+        student.add_subject(subject)
+        with pytest.raises(ValueError):
+            student.set_grade(subject, 0)
+
+@pytest.mark.usefixtures('student', 'subject', 'subjects')
+class TestErrorPathGetGrade:
+    pass
+
+** Step 7 **
+import pytest
+
+@pytest.fixture
+def student():
+    from student import Student
+    stud = Student('Luka Zauber')
+    yield stud
+    del stud
+
+@pytest.fixture
+def subject():
+    from subject import Subject
+    s = Subject('Unit Testing 101')
+    yield s
+    del s
+
+@pytest.fixture
+def subjects():
+    from subject import Subject
+    s = [Subject('Unit Testing 101'), Subject('CS500')]
+    yield s
+    del s
+
+@pytest.mark.usefixtures('student', 'subject')
+class TestErrorPathSubject:
+    def test_add_empty_subject_to_student(self, student, subject):
+        assert student.add_subject(None) is False
+
+    def test_add_existing_subject_to_student(self, student, subject):
+        student.add_subject(subject)
+        assert student.add_subject(subject) is False
+
+@pytest.mark.usefixtures('student', 'subject')
+class TestErrorPathAddGrade:
+    def test_add_higher_grade_to_subject(self, student, subject):
+        student.add_subject(subject)
+        with pytest.raises(ValueError):
+            student.set_grade(subject, 11)
+
+     def test_add_lower_grade_to_subject(self, student, subject):
+        student.add_subject(subject)
+        with pytest.raises(ValueError):
+            student.set_grade(subject, -1)
+
+    def test_add_zero_grade_to_subject(self, student, subject):
+        student.add_subject(subject)
+        with pytest.raises(ValueError):
+            student.set_grade(subject, 0)
+
+@pytest.mark.usefixtures('student', 'subject', 'subjects')
+class TestErrorPathGetGrade:
+    def test_get_none_subject_grade(self, student, subject):
+        student.add_subject(subject)
+        student.set_grade(subject, 8)
+        assert student.get_grades_for_subject(None) is False
+
+** Step 8 **
+import pytest
+
+@pytest.fixture
+def student():
+    from student import Student
+    stud = Student('Luka Zauber')
+    yield stud
+    del stud
+
+@pytest.fixture
+def subject():
+    from subject import Subject
+    s = Subject('Unit Testing 101')
+    yield s
+    del s
+
+@pytest.fixture
+def subjects():
+    from subject import Subject
+    s = [Subject('Unit Testing 101'), Subject('CS500')]
+    yield s
+    del s
+
+@pytest.mark.usefixtures('student', 'subject')
+class TestErrorPathSubject:
+    def test_add_empty_subject_to_student(self, student, subject):
+        assert student.add_subject(None) is False
+
+    def test_add_existing_subject_to_student(self, student, subject):
+        student.add_subject(subject)
+        assert student.add_subject(subject) is False
+
+@pytest.mark.usefixtures('student', 'subject')
+class TestErrorPathAddGrade:
+    def test_add_higher_grade_to_subject(self, student, subject):
+        student.add_subject(subject)
+        with pytest.raises(ValueError):
+            student.set_grade(subject, 11)
+
+     def test_add_lower_grade_to_subject(self, student, subject):
+        student.add_subject(subject)
+        with pytest.raises(ValueError):
+            student.set_grade(subject, -1)
+
+    def test_add_zero_grade_to_subject(self, student, subject):
+        student.add_subject(subject)
+        with pytest.raises(ValueError):
+            student.set_grade(subject, 0)
+
+@pytest.mark.usefixtures('student', 'subject', 'subjects')
+class TestErrorPathGetGrade:
+    def test_get_none_subject_grade(self, student, subject):
+        student.add_subject(subject)
+        student.set_grade(subject, 8)
+        assert student.get_grades_for_subject(None) is False
+
+    def test_get_missing_subject_grade(self, student, subjects):
+        student.add_subject(subjects[0])
+        student.add_subject(subjects[1])
+        student.set_grade(subjects[0], 8)
+        assert student.get_grades_for_subject(subjects[1]) == []
+
+** Step 9 **
+pytest test_grades_errorpath.py
+
+********************************************
+****************** Task 4 ****************** 
+********************************************
+** Step 1 **
+import subject
+
+class Student:
+    def __init__(self, name):
+        self.name = name
+        self.email = None
+        self.subjects = []
+        self.grades = []
+
+    def add_subject(self, subject):
+        if subject:
+            if subject not in self.subjects:
+                self.subjects.append(subject)
+                return True
+        else:
+            return False
+
+    def set_grade(self, subject, grade):
+        self.grades.append((subject, grade))
+        return True
+
+    def get_grades_for_subject(self, subject):
+        grades = []
+        for grade in self.grades:
+            grades.append(grade[1])
+
+            return grades
+
+** Step 2 **
+import subject
+
+class Student:
+    def __init__(self, name):
+        self.name = name
+        self.email = None
+        self.subjects = []
+        self.grades = []
+
+    def add_subject(self, subject):
+        if subject:
+            if subject not in self.subjects:
+                self.subjects.append(subject)
+                return True
+        else:
+            return False
+
+    def set_grade(self, subject, grade):
+        if (subject and grade) or (subject and grade is int(0)):
+            if subject in self.subjects:
+                if grade < 1 or grade > 10:
+                    raise ValueError('grade out of bound', grade)
+                else:
+                    self.grades.append((subject, grade))
+                    return True
+
+            else:
+                raise ValueError('no subject or grade', subject)
+        else:
+            return False
+
+    def get_grades_for_subject(self, subject):
+        grades = []
+        for grade in self.grades:
+            grades.append(grade[1])
+
+            return grades
+
+** Step 3 **
+None
+
+** Step 3 **
+import subject
+
+class Student:
+    def __init__(self, name):
+        self.name = name
+        self.email = None
+        self.subjects = []
+        self.grades = []
+
+    def add_subject(self, subject):
+        if subject:
+            if subject not in self.subjects:
+                self.subjects.append(subject)
+                return True
+        else:
+            return False
+
+    def set_grade(self, subject, grade):
+        if (subject and grade) or (subject and grade is int(0)):
+            if subject in self.subjects:
+                if grade < 1 or grade > 10:
+                    raise ValueError('grade out of bound', grade)
+                else:
+                    self.grades.append((subject, grade))
+                    return True
+
+            else:
+                raise ValueError('no subject or grade', subject)
+        else:
+            return False
+
+    def get_grades_for_subject(self, subject):
+        if subject:
+            grades = []
+            for grade in self.grades:
+                if grade[0] is subject:
+                    grades.append(grade[1])
+        else:
+            return False
+
+        return grades
+
+** Step 4 **
+pytest test_grades_errorpath.py
+
+** Step 5 **
+coverage run --source student -m pytest test_grades_errorpath.py
+
+** Step 6 **
+coverage report
